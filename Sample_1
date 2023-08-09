@@ -1,0 +1,22 @@
+Retrofit retrofit = new Retrofit.Builder()
+    .baseUrl("https://qa2.sunbasedata.com/")
+    .addConverterFactory(GsonConverterFactory.create())
+    .build();
+
+ApiService apiService = retrofit.create(ApiService.class);
+Call<ClientResponse> call = apiService.getClientData();
+call.enqueue(new Callback<ClientResponse>() {
+    @Override
+    public void onResponse(Call<ClientResponse> call, Response<ClientResponse> response) {
+        if (response.isSuccessful()) {
+            ClientResponse clientResponse = response.body();
+            List<Client> clients = clientResponse.getClients();
+            // Now you have a list of clients to work with
+        }
+    }
+
+    @Override
+    public void onFailure(Call<ClientResponse> call, Throwable t) {
+        // Handle error
+    }
+});
